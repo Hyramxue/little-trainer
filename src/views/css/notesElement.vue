@@ -6,7 +6,7 @@
       v-model="model"
       :value="label"
       type="checkbox"
-     
+ 
     />
     <label @click="model=!model" :for="label+curTime">
       <span class="one-checkbox_label">
@@ -45,7 +45,7 @@ export default {
   computed: {
     model: {
       get () {
-        return this.isGroup ? this.CheckboxGroup.value : this.value
+        return this.isGroup ? this.CheckboxGroup.value : this.value;
       },
       set (value) {
         this.isGroup ? this.CheckboxGroup.$emit('input', value) : this.$emit('input', value)
