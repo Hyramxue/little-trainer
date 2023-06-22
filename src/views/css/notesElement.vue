@@ -6,7 +6,7 @@
       v-model="model"
       :value="label"
       type="checkbox"
-      key="s"
+     
     />
     <label @click="model=!model" :for="label+curTime">
       <span class="one-checkbox_label">
