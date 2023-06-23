@@ -1,7 +1,7 @@
 <template>
   <div class="top-nav-wrapper">
     <div class="nav-bar-flex">
-      <div class="party-building-title">智慧党建</div>
+      <div class="party-building-title">小练习</div>
 
       <div class="party-building-left">
         <div class="party-building-time">
