@@ -16,7 +16,7 @@ const routes = [
     {
         path: "",
         component: Layout,
-        
+
         children: [
 
             {
@@ -29,80 +29,105 @@ const routes = [
                 },
 
             },
-
+            //js
             {
-                path: '/day',
-                name: 'day',
-                // component:'date/dayjs',
-                component: () => import('@/views/date/dayjs'),
-                meta: {
-                    title: '时间处理'
-                },
-            },
-            //定位
-            {
-                path: '/location',
-                name: 'location',
-                // component: '/location/location',
-                component: () => import('@/views/location/location'),
-                meta: {
-                    title: '定位'
-                },
+                path: 'jsdemo',
+                name: 'jsdemo',
 
-            },
-            //food
-            {
-                path: '/food',
-                name: 'food',
-                // component:'food/index',
-                component: () => import('@/views/food/index'),
+                component: () => import("@/views/js/index"),
                 meta: {
-                    title: '食物'
+                    title: 'js小案例'
                 },
-
-            },
-            //food
-            {
-                path: '/charging',
-                name: 'charging',
-                // component:'food/index',
-                component: () => import('@/views/charging/index'),
-                meta: {
-                    title: '电'
+                children: [{
+                    path: 'day',
+                    name: 'day',
+      
+                    component: () => import('@/views/js/date/dayjs'),
+                    meta: {
+                        title: '时间处理'
+                    },
                 },
+                //定位
+                {
+                    path: 'location',
+                    name: 'location',
+ 
+                    component: () => import('@/views/js/location/location'),
+                    meta: {
+                        title: '定位'
+                    },
 
-            },
-            //Three.js 
-            {
-                path: '/threeJs',
-                name: 'threeJs',
-                // component:'food/index',
-                component: () => import('@/views/threeJs/index'),
-                meta: {
-                    title: 'Three.js '
                 },
+                //food
+                {
+                    path: 'food',
+                    name: 'food',
+   
+                    component: () => import('@/views/js/food/index'),
+                    meta: {
+                        title: '食物'
+                    },
 
-            },
-            {
-                path: '/ml5',
-                name: 'ml5',
-                // component:'food/index',
-                component: () => import('@/views/ml5/index'),
-                meta: {
-                    title: 'ml5'
                 },
+                //food
+                {
+                    path: 'charging',
+                    name: 'charging',
+    
+                    component: () => import('@/views/js/charging/index'),
+                    meta: {
+                        title: '电'
+                    },
 
-            },
-            {
-                path: '/echarts',
-                name: 'echarts',
-                // component:'food/index',
-                component: () => import('@/views/ml5/index'),
-                meta: {
-                    title: 'echarts'
                 },
+                //Three.js 
+                {
+                    path: 'threeJs',
+                    name: 'threeJs',
+            
+                    component: () => import('@/views/js/threeJs/index'),
+                    meta: {
+                        title: 'Three.js '
+                    },
 
+                },
+                //ml5
+                {
+                    path: 'ml5',
+                    name: 'ml5',
+             
+                    component: () => import('@/views/js/ml5/index'),
+                    meta: {
+                        title: 'ml5'
+                    },
+
+                },
+                //echarts
+                {
+                    path: 'echarts',
+                    name: 'echarts',
+              
+                    component: () => import('@/views/js/ml5/index'),
+                    meta: {
+                        title: 'echarts'
+                    },
+
+                },
+                //echarts
+                {
+                    path: 'drawing',
+                    name: 'drawing',
+                
+                    component: () => import('@/views/js/drawing/index'),
+                    meta: {
+                        title: '画板'
+                    },
+
+                },
+            ]
             },
+
+            //css
             {
                 path: 'cssdemo',
                 name: 'cssdemo',
@@ -115,7 +140,7 @@ const routes = [
                     {
                         path: 'spring',
                         name: 'spring',
-                        component: () => import("@/views/css/spring"),
+                        component: () => import("@/views/css/spring/spring"),
                         meta: { title: '魔力弹簧', icon: '' }
                     },
                     {
@@ -127,13 +152,13 @@ const routes = [
                     {
                         path: 'notesHTML',
                         name: 'notesHTML',
-                        component: () => import("@/views/css/notesHTML"),
+                        component: () => import("@/views/css/notes/notesHTML/notesHTML"),
                         meta: { title: '代办HTML', icon: '' }
                     },
                     {
                         path: 'notesElement',
                         name: 'notesElement',
-                        component: () => import("@/views/css/notes"),
+                        component: () => import("@/views/css/notes/notesElement/notes"),
                         meta: { title: '代办Element', icon: '' }
                     },
                 ]
