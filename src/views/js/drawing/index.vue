@@ -171,6 +171,7 @@ export default {
       this.newStatusArr= [];
       this.cancelDisable=true;
       this.rebackDisable= true;
+      
     },
     downLoand() {
       let src = canvas.toDataURL("image/png");
