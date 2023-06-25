@@ -3,7 +3,7 @@
  /**
  * @param  {String}  path     路径
  * @param  {Object}  data     参数
- * @param  {Boolean} loading  全局加载状态 默认false
+ * @param  {Boolean} loading  全局加载状态 默认false q
  * @param  {string}  text     加载文字
  * @return {ListNode}
  */
