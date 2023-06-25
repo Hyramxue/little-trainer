@@ -13,8 +13,12 @@
             <el-slider :min="1" v-model="lineWidth" show-input> </el-slider>
           </el-form-item>
           <el-form-item>
-            <el-button @click="reback" :disabled='rebackDisable'>撤销</el-button>
-            <el-button @click="cancelReback" :disabled='cancelDisable'>取消撤销</el-button>
+            <el-button @click="reback" :disabled="rebackDisable"
+              >撤销</el-button
+            >
+            <el-button @click="cancelReback" :disabled="cancelDisable"
+              >取消撤销</el-button
+            >
             <el-button @click="clear">清空</el-button>
             <el-button @click="downLoand">下载</el-button>
           </el-form-item>
@@ -43,8 +47,8 @@ export default {
       statusArr: [],
       statusIndex: 0,
       newStatusArr: [],
-      cancelDisable:true,
-      rebackDisable:true,
+      cancelDisable: true,
+      rebackDisable: true,
     };
   },
   mounted() {
@@ -104,20 +108,20 @@ export default {
 
       this.statusArr.push(imageData);
       this.statusIndex++;
-   
-      //取消撤销
-        this.cancelDisable =this.statusIndex==0||(this.statusArr.length&&this.statusIndex== this.statusArr.length)?true:false
-        //撤销
-      
-        this.rebackDisable =this.statusIndex==0?true:false
-  
+
+      //撤销
+
+      this.rebackDisable = this.statusIndex == 0 ? true : false;
     },
     //撤销
     reback(status) {
       const { ctx } = this;
       let { statusArr } = this;
-     this.rebackDisable =this.statusIndex==1?true:false
- 
+      this.rebackDisable = this.statusIndex == 1 ? true : false;
+      console.log(this.statusIndex, "this.statusIndex");
+      console.log(this.statusArr.length, "this.statusArr.length");
+      console.log(this.statusArr, "this.statusArr");
+
       if (this.statusIndex - 1) {
         this.statusIndex--;
         console.log("this.statusIndex");
@@ -127,6 +131,12 @@ export default {
           this.newStatusArr.push(statusArr[index]);
         }
         ctx.putImageData(imageData, 0, 0);
+        //取消撤销
+        this.cancelDisable =
+          this.statusIndex == 0 ||
+          (this.statusArr.length && this.statusIndex == this.statusArr.length)
+            ? true
+            : false;
       } else if (this.statusIndex - 1 == 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
@@ -135,7 +145,10 @@ export default {
     cancelReback() {
       const { ctx } = this;
       let { statusArr } = this;
-        this.cancelDisable =this.statusIndex==0||this.statusIndex== this.statusArr.length?true:false
+      this.cancelDisable =
+        this.statusIndex == 0 || this.statusIndex == this.statusArr.length
+          ? true
+          : false;
       if (this.statusIndex) {
         let imageData = statusArr[this.statusIndex - 1];
         this.statusIndex++;
@@ -143,6 +156,8 @@ export default {
         for (let index = 0; index < this.statusIndex; index++) {
           this.newStatusArr.push(statusArr[index]);
         }
+
+        this.rebackDisable = this.statusIndex == 0 ? true : false;
         ctx.putImageData(imageData, 0, 0);
       }
     },
@@ -150,6 +165,12 @@ export default {
     clear() {
       const { ctx } = this;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //状态列表
+      this.statusArr=[];
+      this.statusIndex= 0;
+      this.newStatusArr= [];
+      this.cancelDisable=true;
+      this.rebackDisable= true;
     },
     downLoand() {
       let src = canvas.toDataURL("image/png");
