@@ -64,6 +64,7 @@ export default {
 
       var { isDraw, ctx, color, lineWidth } = this;
 
+      //添加文字
       this.addText();
 
       //鼠标按下开始
@@ -138,10 +139,7 @@ export default {
         }
         ctx.putImageData(imageData, 0, 0);
       } else if (this.statusIndex - 1 == 0) {
- 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
- 
-     
       }
     },
     //取消撤销
