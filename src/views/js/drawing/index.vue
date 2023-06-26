@@ -61,7 +61,10 @@ export default {
       canvas.width = offsetWidth;
       canvas.height = offsetHeight;
       this.ctx = canvas.getContext("2d");
+
       var { isDraw, ctx, color, lineWidth } = this;
+
+      this.addText();
 
       //鼠标按下开始
       canvas.onmousedown = (e) => {
@@ -94,7 +97,6 @@ export default {
     //画
     draw(x, y) {
       const { ctx, color, lineWidth } = this;
-
       ctx.strokeStyle = color;
       ctx.lineWidth = lineWidth;
       ctx.beginPath();
@@ -117,28 +119,29 @@ export default {
     reback(status) {
       const { ctx } = this;
       let { statusArr } = this;
+      //todo撤销
       this.rebackDisable = this.statusIndex == 1 ? true : false;
-      console.log(this.statusIndex, "this.statusIndex");
-      console.log(this.statusArr.length, "this.statusArr.length");
-      console.log(this.statusArr, "this.statusArr");
+      //todo取消撤销
+      this.cancelDisable =
+        this.statusIndex == 0 ||
+        (this.statusArr.length && this.statusIndex - 1 == this.statusArr.length)
+          ? true
+          : false;
 
       if (this.statusIndex - 1) {
         this.statusIndex--;
-        console.log("this.statusIndex");
+
         let imageData = statusArr[this.statusIndex - 1];
         this.newStatusArr = [];
         for (let index = 0; index < this.statusIndex; index++) {
           this.newStatusArr.push(statusArr[index]);
         }
         ctx.putImageData(imageData, 0, 0);
-        //取消撤销
-        this.cancelDisable =
-          this.statusIndex == 0 ||
-          (this.statusArr.length && this.statusIndex == this.statusArr.length)
-            ? true
-            : false;
       } else if (this.statusIndex - 1 == 0) {
+ 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+     
       }
     },
     //取消撤销
@@ -165,13 +168,12 @@ export default {
     clear() {
       const { ctx } = this;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //状态列表
-      this.statusArr=[];
-      this.statusIndex= 0;
-      this.newStatusArr= [];
-      this.cancelDisable=true;
-      this.rebackDisable= true;
-      
+      //状态列表
+      this.statusArr = [];
+      this.statusIndex = 0;
+      this.newStatusArr = [];
+      this.cancelDisable = true;
+      this.rebackDisable = true;
     },
     downLoand() {
       let src = canvas.toDataURL("image/png");
@@ -179,6 +181,23 @@ export default {
       a.href = src;
       a.download = `画板${new Date()}.png`;
       a.click();
+    },
+    //FIXME 添加文字
+    addText() {
+      let { ctx } = this;
+      // 设置字体信息
+      ctx.font = "bold 20px Arial";
+
+      ////  设置文字样式
+      //   ctx.fillStyle = "#FFF";
+      //   ctx.strokeStyle = "#FFF";
+      //   ctx.shadowColor = "#FFF";
+      //   ctx.shadowOffsetX = 5;
+      //   ctx.shadowOffsetY = 5;
+      //   ctx.shadowBlur = 10;
+      // 绘制文字  x，y
+      ctx.fillText("我是水印", 10, 20);
+      ctx.strokeText("我是水印", 150, 50);
     },
   },
 };
@@ -190,7 +209,7 @@ export default {
   height: 100%;
   background: #fff;
   border-radius: 8px;
-  //   display: flex;
+  display: flex;
   .el-row {
     width: 100%;
     height: 100%;
