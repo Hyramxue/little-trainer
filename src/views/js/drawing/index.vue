@@ -64,8 +64,10 @@ export default {
 
       var { isDraw, ctx, color, lineWidth } = this;
 
-      //添加文字
+      //todo添加文字
       this.addText();
+      //todo添加图片
+      this.addImg();
 
       //鼠标按下开始
       canvas.onmousedown = (e) => {
@@ -196,6 +198,19 @@ export default {
       // 绘制文字  x，y
       ctx.fillText("我是水印", 10, 20);
       ctx.strokeText("我是水印", 150, 50);
+    },
+    addImg() {
+      const { ctx } = this;
+      //创建一个image元素
+      let image = new Image();
+      //用src设置图片的地址
+      image.src = require("../../../assets/logo.png");
+      image.onload = function () {
+        //drawImage(image, x, y)
+        // drawImage(image, x, y, width, height)
+        //drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight,destX, destY, destWidth, destHeight)
+        ctx.drawImage(image, 100, 100, 200, 100);
+      };
     },
   },
 };
