@@ -186,6 +186,7 @@ export default {
     addText() {
       let { ctx } = this;
       // 设置字体信息
+      
       ctx.font = "bold 20px Arial";
       ////  设置文字样式
       //   ctx.fillStyle = "#FFF";
