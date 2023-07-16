@@ -1,173 +1,125 @@
-import axios from 'axios';
-import { Loading, Message } from 'element-ui';
-import { getToken,getCsrf} from '@/utils/auth';
+import axios from 'axios'
+import { Notification, MessageBox, Message, Loading } from 'element-ui'
+import store from '@/store'
+import { getToken } from '@/utils/auth'
+import errorCode from '@/utils/errorCode'
+import { tansParams, blobValidate } from "@/utils/ruoyi";
+import { saveAs } from 'file-saver'
 
+let downloadLoadingInstance;
 
-const pendingMap = new Map();
+axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+// 创建axios实例
+const service = axios.create({
+  // axios中请求配置有baseURL选项，表示请求URL公共部分
+  baseURL: process.env.VUE_APP_BASE_API,
+  // 超时
+  timeout: 10000
+})
 
-const LoadingInstance = {
-    _target: null,
-    _count: 0
-};
+// request拦截器
+service.interceptors.request.use(config => {
+  // 是否需要设置 token
+  const isToken = (config.headers || {}).isToken === false
+  if (getToken() && !isToken) {
+    config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+  }
+  // get请求映射params参数
+  if (config.method === 'get' && config.params) {
+    let url = config.url + '?' + tansParams(config.params);
+    url = url.slice(0, -1);
+    config.params = {};
+    config.url = url;
+  }
+  return config
+}, error => {
+    console.log(error)
+    Promise.reject(error)
+})
 
-function myAxios(axiosConfig, customOptions, loadingOptions) {
-    const service = axios.create({
-        baseURL: process.env.VUE_APP_BASE_API, // 设置统一的请求前缀
-        timeout: 10000, // 设置统一的超时时长
-
-    });
-
-    // 自定义配置
-    let custom_options = Object.assign({
-        repeat_request_cancel: true, // 是否开启取消重复请求, 默认为 true
-        loading: false, // 是否开启loading层效果, 默认为false
-        reduct_data_format: true, // 是否开启简洁的数据结构响应, 默认为true
-        error_message_show: true, // 是否开启接口错误信息展示,默认为true
-        code_message_show: true, // 是否开启code不为0时的信息提示, 默认为true
-    }, customOptions);
-
-    // 请求拦截
-    service.interceptors.request.use(
-        config => {
-            removePending(config);
-            custom_options.repeat_request_cancel && addPending(config);
-            // 创建loading实例
-            if (custom_options.loading) {
-                LoadingInstance._count++;
-                if (LoadingInstance._count === 1) {
-                    LoadingInstance._target = Loading.service(loadingOptions);
-                }
-            }
-            // 自动携带token
-            if (getToken() && typeof window !== "undefined") {
-                config.headers.Authorization = getToken();
-            }
-            if (getCsrf() && typeof window !== "undefined") {
-                config.headers['x-csrf-token'] = getCsrf();
-                 
-            }
-           
-
-            return config;
-        },
-        error => {
-            return Promise.reject(error);
-        }
-    );
-
-    // 响应拦截
-    service.interceptors.response.use(
-        response => {
-            removePending(response.config);
-            custom_options.loading && closeLoading(custom_options); // 关闭loading
-            console.log(  response.data && response.data.code !== 200);
-            if (custom_options.code_message_show && response.data && response.data.code != 200) {
-            
-                Message({
-                    type: 'error',
-                    message: response.data.msg
-                })
-                return Promise.reject( response.data); // code不等于0, 页面具体逻辑就不执行了
-            }
-
-            return custom_options.reduct_data_format ? response.data : response;
-        },
-        error => {
-            error.config && removePending(error.config);
-            custom_options.loading && closeLoading(custom_options); // 关闭loading
-            custom_options.error_message_show && httpErrorStatusHandle(error); // 处理错误状态码
-            return Promise.reject(error); // 错误继续返回给到具体页面
-        }
-    );
-
-    return service(axiosConfig)
-}
-
-export default myAxios
-/**
- * 处理异常
- * @param {*} error 
- */
-function httpErrorStatusHandle(error) {
-    // 处理被取消的请求
-  
-    if (axios.isCancel(error)) return console.error('请求的重复请求：' + error.message);
-    let message = '';
-    if (error && error.response) {
-        switch (error.response.status) {
-            case 302: message = '接口重定向了！'; break;
-            case 400: message = '参数不正确！'; break;
-            case 401: message = '您未登录，或者登录已经超时，请先登录！'; break;
-            case 403: message = '您没有权限操作！'; break;
-            case 404: message = `请求地址出错: ${error.response.config.url}`; break; // 在正确域名下
-            case 408: message = '请求超时！'; break;
-            case 409: message = '系统已存在相同数据！'; break;
-            case 500: message = '服务器内部错误！'; break;
-            case 501: message = '服务未实现！'; break;
-            case 502: message = '网关错误！'; break;
-            case 503: message = '服务不可用！'; break;
-            case 504: message = '服务暂时无法访问，请稍后再试！'; break;
-            case 505: message = 'HTTP版本不受支持！'; break;
-            default: message = '异常问题，请联系管理员！'; break
-        }
+// 响应拦截器
+service.interceptors.response.use(res => {
+    // 未设置状态码则默认成功状态
+    const code = res.data.code || 200;
+    // 获取错误信息
+    const msg = errorCode[code] || res.data.msg || errorCode['default']
+    // 二进制数据则直接返回
+    if(res.request.responseType ===  'blob' || res.request.responseType ===  'arraybuffer'){
+      return res.data
     }
-    if (error.message.includes('timeout')) message = '网络请求超时！';
-    if (error.message.includes('Network')) message = window.navigator.onLine ? '服务端异常！' : '您断网了！';
-
+    if (code === 401) {
+      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).then(() => {
+        store.dispatch('LogOut').then(() => {
+          location.href = '/index';
+        })
+      }).catch(() => {});
+      return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
+    } else if (code === 500) {
+      Message({
+        message: msg,
+        type: 'error'
+      })
+      return Promise.reject(new Error(msg))
+    } else if (code !== 200) {
+      Notification.error({
+        title: msg
+      })
+      return Promise.reject('error')
+    } else {
+      return res.data
+    }
+  },
+  error => {
+    console.log('err' + error)
+    let { message } = error;
+    if (message == "Network Error") {
+      message = "后端接口连接异常";
+    }
+    else if (message.includes("timeout")) {
+      message = "系统接口请求超时";
+    }
+    else if (message.includes("Request failed with status code")) {
+      message = "系统接口" + message.substr(message.length - 3) + "异常";
+    }
     Message({
-        type: 'error',
-        message
+      message: message,
+      type: 'error',
+      duration: 5 * 1000
     })
-}
+    return Promise.reject(error)
+  }
+)
 
-/**
- * 关闭Loading层实例
- * @param {*} _options 
- */
-function closeLoading(_options) {
-    console.log('_options', _options);
-    if (_options.loading && LoadingInstance._count > 0) LoadingInstance._count--;
-    if (LoadingInstance._count === 0) {
-        LoadingInstance._target.close();
-        LoadingInstance._target = null;
-
+// 通用下载方法
+export function download(url, params, filename) {
+    console.log(url, params, filename);
+  downloadLoadingInstance = Loading.service({ text: "正在下载数据，请稍候", spinner: "el-icon-loading", background: "rgba(0, 0, 0, 0.7)", })
+  return service.post(url, params, {
+    transformRequest: [(params) => { return tansParams(params) }],
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    responseType: 'blob'
+  }).then(async (data) => {
+    const isLogin = await blobValidate(data);
+    if (isLogin) {
+      const blob = new Blob([data])
+      saveAs(blob, filename)
+    } else {
+      const resText = await data.text();
+      const rspObj = JSON.parse(resText);
+      const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
+      Message.error(errMsg);
     }
+    downloadLoadingInstance.close();
+  }).catch((r) => {
+    console.error(r)
+    Message.error('下载文件出现错误，请联系管理员！')
+    downloadLoadingInstance.close();
+  })
 }
 
-/**
- * 储存每个请求的唯一cancel回调, 以此为标识
- * @param {*} config 
- */
-function addPending(config) {
-    const pendingKey = getPendingKey(config);
-    config.cancelToken = config.cancelToken || new axios.CancelToken((cancel) => {
-        if (!pendingMap.has(pendingKey)) {
-            pendingMap.set(pendingKey, cancel);
-        }
-    });
-}
-
-/**
- * 删除重复的请求
- * @param {*} config 
- */
-function removePending(config) {
-    const pendingKey = getPendingKey(config);
-    if (pendingMap.has(pendingKey)) {
-        const cancelToken = pendingMap.get(pendingKey);
-        // 如你不明白此处为什么需要传递pendingKey可以看文章下方的补丁解释
-        cancelToken(pendingKey);
-        pendingMap.delete(pendingKey);
-    }
-}
-
-/**
- * 生成唯一的每个请求的唯一key
- * @param {*} config 
- * @return s 
- */
-function getPendingKey(config) {
-    let { url, method, params, data } = config;
-    if (typeof data === 'string') data = JSON.parse(data); // response里面返回的config.data是个字符串对象
-    return [url, method, JSON.stringify(params), JSON.stringify(data)].join('&');
-}
+export default service

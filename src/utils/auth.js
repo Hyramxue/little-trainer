@@ -28,46 +28,4 @@ export function setCsrf(csrf) {
 export function removeCsrf() {
   return Cookies.remove(csrfKey)
 }
-export function getrouter() {
-  return  [
-    // {
-    //     path: '/home',
-    //     name: 'home',
-    //     component:  () =>  import('HomeView') ,
-    //     meta: {
-    //         title: '首页'
-    //     },
-
-    // },
-
-    // {
-    //     path: '/day',
-    //     name: 'day',
-    //     component: () => import('date/dayjs'),
-    //     meta: {
-    //         title: '时间处理'
-    //     },
-    // },
-    // //定位
-    // {
-    //     path: '/location',
-    //     name: 'location',
-    //     component: () => import('location/location'),
-    //     meta: {
-    //         title: '定位'
-    //     },
-    
-    // },
-    // //food
-    // {
-    //     path: '/food',
-    //     name: 'food',
-    //     component: () => import('food/index'),
-    //     meta: {
-    //         title: '食物'
-    //     },
-    
-    // },
-
-]
-}
+ 

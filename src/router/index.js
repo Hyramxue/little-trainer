@@ -41,7 +41,7 @@ const routes = [
                 children: [{
                     path: 'day',
                     name: 'day',
-      
+
                     component: () => import('@/views/js/date/dayjs'),
                     meta: {
                         title: '时间处理'
@@ -51,7 +51,7 @@ const routes = [
                 {
                     path: 'location',
                     name: 'location',
- 
+
                     component: () => import('@/views/js/location/location'),
                     meta: {
                         title: '定位'
@@ -62,7 +62,7 @@ const routes = [
                 {
                     path: 'food',
                     name: 'food',
-   
+
                     component: () => import('@/views/js/food/index'),
                     meta: {
                         title: '食物'
@@ -73,7 +73,7 @@ const routes = [
                 {
                     path: 'charging',
                     name: 'charging',
-    
+
                     component: () => import('@/views/js/charging/index'),
                     meta: {
                         title: '电'
@@ -84,7 +84,7 @@ const routes = [
                 {
                     path: 'threeJs',
                     name: 'threeJs',
-            
+
                     component: () => import('@/views/js/threeJs/index'),
                     meta: {
                         title: 'Three.js '
@@ -95,7 +95,7 @@ const routes = [
                 {
                     path: 'ml5',
                     name: 'ml5',
-             
+
                     component: () => import('@/views/js/ml5/index'),
                     meta: {
                         title: 'ml5'
@@ -106,7 +106,7 @@ const routes = [
                 {
                     path: 'echarts',
                     name: 'echarts',
-              
+
                     component: () => import('@/views/js/ml5/index'),
                     meta: {
                         title: 'echarts'
@@ -117,14 +117,25 @@ const routes = [
                 {
                     path: 'drawing',
                     name: 'drawing',
-                
+
                     component: () => import('@/views/js/drawing/index'),
                     meta: {
                         title: '画板'
                     },
 
                 },
-            ]
+                //切图
+                {
+                    path: 'imgly',
+                    name: 'imgly',
+
+                    component: () => import('@/views/js/imgly/index'),
+                    meta: {
+                        title: '抠图'
+                    },
+
+                },
+                ]
             },
 
             //css
@@ -165,7 +176,30 @@ const routes = [
 
             },
 
+            //other
+            {
+                path: 'other',
+                name: 'other',
 
+                component: () => import("@/views/other/index"),
+                meta: {
+                    title: '其他瞎搞'
+                },
+                children: [
+                    {
+                        path: 'mynotice',
+                        name: 'mynotice',
+                        component: () => import("@/views/other/mynotice/mynotice"),
+                        meta: { title: '我的消息', icon: '' }
+                    },
+                    {
+                        path: 'file',
+                        name: 'file',
+                        component: () => import("@/views/other/file/file"),
+                        meta: { title: '文件预览', icon: '' }
+                    },
+                ]
+            },
         ]
     },
     {
@@ -175,6 +209,8 @@ const routes = [
         component: () => import('../views/login.vue'),
 
     },
+
+
 
 
 

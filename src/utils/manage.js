@@ -1,4 +1,4 @@
-import myAxios from './request'
+import request from './request'
  
 
 
@@ -6,7 +6,7 @@ import myAxios from './request'
 export function postAction(url, data, customOptions, loadingOptions) {
 
  
-  return myAxios({
+  return request({
     url: url,
     method: 'post',  
 
@@ -19,7 +19,7 @@ export function postAction(url, data, customOptions, loadingOptions) {
 
 //put
 export function putAction(url, data) {
-  return myAxios({
+  return request({
     url: url,
     method: 'put',
     data,
@@ -30,7 +30,7 @@ export function putAction(url, data) {
 export function getAction(url, params, customOptions, loadingOptions) {
 
 
-  return myAxios({
+  return request({
     url: url,
     method: 'get',
     params,
@@ -40,7 +40,7 @@ export function getAction(url, params, customOptions, loadingOptions) {
 
 //deleteAction
 export function deleteAction(url, params) {
-  return myAxios({
+  return request({
     url: url,
     method: 'delete',
     params,
@@ -51,7 +51,7 @@ export function deleteAction(url, params) {
 //post method= {post | put}
 export function httpAction(url, data, method) {
 
-  return myAxios({
+  return request({
     url: url,
     method: method,
     data,

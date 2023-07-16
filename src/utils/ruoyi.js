@@ -218,18 +218,4 @@ export async function blobValidate(data) {
       return true;
     }
 }
-//  修改uuid
-export   function     getUuid(appendixList) {
-    var arr = [];
-   if (appendixList) {
-
-    if (appendixList.length) {
-      arr = appendixList.map((ele) => {
-        return ele.uuid;
-      });
-    }
-
-   }  
-    
-    return arr;
-  } 
+ 

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-
+    <imageUploads></imageUploads>
   </div>
 </template>
 
