@@ -74,19 +74,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// #siderbar {
-//   width: 100%;
-// //   height: 100%;
+#siderbar {
+  width: 100%;
+  height: 100%;
 
-//   .el-menu {
-//     width: 100%;
-//     // height: 100%;
-//     overflow: hidden;
-//     background-color: transparent !important;
-//   }
-// }
+  .el-menu {
+    width: 100%;
+    height: 100%;
+    // overflow: hidden;
+    // background-color: transparent !important;
+  }
+}
 ::v-deep .el-menu-item {
-  width: 150px;
+ 
 //   height: 60px !important;
 //   height: auto;
 //   display: flex;

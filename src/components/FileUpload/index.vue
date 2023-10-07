@@ -359,68 +359,49 @@ export default {
         fileType = fileName.split(".")[fileName.split(".").length - 1];
       }
       const imgType = ["png", "jpg", "jpeg"];
-      const imgTypeOk = imgType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
-
-        return false;
-      });
+      const imgTypeOk = this.showFileType(fileType, imgType);
       //图片
       if (imgTypeOk) {
         return "img";
       }
 
       const txtType = ["txt"];
-      const txtTypeOk = txtType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
-
-        return false;
-      });
+      const txtTypeOk = this.showFileType(fileType, txtType);
       //文本
       if (txtTypeOk) {
         return "txt";
       }
       //word
       const wordType = ["doc", "docx"];
-      const wordTypeOk = wordType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
-
-        return false;
-      });
-
+      const wordTypeOk = this.showFileType(fileType, wordType);
       if (wordTypeOk) {
         return "word";
       }
       //excel
-   
-      const excelType = ["xls", "xlsx"];
-      const excelTypeOk = excelType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
 
-        return false;
-      });
+      const excelType = ["xls", "xlsx"];
+      const excelTypeOk = this.showFileType(fileType, excelType);
 
       if (excelTypeOk) {
         return "excel";
       }
       const pptType = ["ppt", "pptx"];
-      const pptTypeOk = pptType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
-
-        return false;
-      });
+      const pptTypeOk = this.showFileType(fileType, pptType);
 
       if (pptTypeOk) {
         return "ppt";
       }
       const pdfType = ["pdf"];
-      const pdfTypeOk = pdfType.some((type) => {
-        if (fileType.indexOf(type) > -1) return true;
-
-        return false;
-      });
+      const pdfTypeOk =  this.showFileType(fileType, pdfType);
 
       if (pdfTypeOk) {
         return "pdf";
+      }
+      const htmlType = ["html",'htm'];
+      const htmlTypeOk =  this.showFileType(fileType, htmlType);
+
+      if (htmlTypeOk) {
+        return "html";
       }
 
       return "other";
@@ -438,14 +419,13 @@ export default {
       const imgTypeOk = this.showFileType(fileType, imgType);
       //图片预览
       if (imgTypeOk) {
-     
         this.isType = "img";
         this.imgurl = openurl;
         this.visible = true;
         return;
       }
 
-      const txtType = ["txt",'html'];
+      const txtType = ["txt", "html"];
       const txtTypeOk = this.showFileType(fileType, txtType);
       //文本
       if (txtTypeOk) {

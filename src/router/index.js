@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../layout';
+import js from './js';
+import vueDepot from './vueDepot';
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -38,103 +40,21 @@ const routes = [
                 meta: {
                     title: 'js小案例'
                 },
-                children: [{
-                    path: 'day',
-                    name: 'day',
+                children: [
+                    ...js
+                ]
+            },
+            //js
+            {
+                path: 'vueDepot',
+                name: 'vueDepot',
 
-                    component: () => import('@/views/js/date/dayjs'),
-                    meta: {
-                        title: '时间处理'
-                    },
+                component: () => import("@/views/childrenRouter"),
+                meta: {
+                    title: 'vue组件库'
                 },
-                //定位
-                {
-                    path: 'location',
-                    name: 'location',
-
-                    component: () => import('@/views/js/location/location'),
-                    meta: {
-                        title: '定位'
-                    },
-
-                },
-                //food
-                {
-                    path: 'food',
-                    name: 'food',
-
-                    component: () => import('@/views/js/food/index'),
-                    meta: {
-                        title: '食物'
-                    },
-
-                },
-                //food
-                {
-                    path: 'charging',
-                    name: 'charging',
-
-                    component: () => import('@/views/js/charging/index'),
-                    meta: {
-                        title: '电'
-                    },
-
-                },
-                //Three.js 
-                {
-                    path: 'threeJs',
-                    name: 'threeJs',
-
-                    component: () => import('@/views/js/threeJs/index'),
-                    meta: {
-                        title: 'Three.js '
-                    },
-
-                },
-                //ml5
-                {
-                    path: 'ml5',
-                    name: 'ml5',
-
-                    component: () => import('@/views/js/ml5/index'),
-                    meta: {
-                        title: 'ml5'
-                    },
-
-                },
-                //echarts
-                {
-                    path: 'echarts',
-                    name: 'echarts',
-
-                    component: () => import('@/views/js/ml5/index'),
-                    meta: {
-                        title: 'echarts'
-                    },
-
-                },
-                //echarts
-                {
-                    path: 'drawing',
-                    name: 'drawing',
-
-                    component: () => import('@/views/js/drawing/index'),
-                    meta: {
-                        title: '画板'
-                    },
-
-                },
-                //切图
-                {
-                    path: 'imgly',
-                    name: 'imgly',
-
-                    component: () => import('@/views/js/imgly/index'),
-                    meta: {
-                        title: '抠图'
-                    },
-
-                },
+                children: [
+                    ...vueDepot
                 ]
             },
 
@@ -206,7 +126,7 @@ const routes = [
         path: '/login',
         name: 'login',
         hidden: true,
-        component: () => import('../views/login.vue'),
+        component: () => import('../views/login2.vue'),
 
     },
 

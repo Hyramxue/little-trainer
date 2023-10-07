@@ -1,5 +1,5 @@
 <template>
-  <div id="siderbar">
+  <div >
     <el-menu
       :default-active="active"
       mode="vertical"
@@ -10,7 +10,11 @@
       active-text-color="#ffd04b"
       router
     >
-      <template v-for="router in routers.filter(ele=>{ return  ele.meta&&ele.meta.title})">
+      <template
+        v-for="router in routers.filter((ele) => {
+          return ele.meta && ele.meta.title;
+        })"
+      >
         <!-- 一级 -->
         <el-menu-item
           :key="router.name"
@@ -40,11 +44,10 @@
 <script>
 export default {
   name: "siderbar",
-  props:['active'],
+  props: ["active"],
   data() {
     return {
       routers: this.$router.options.routes,
-      
     };
   },
   created() {
@@ -59,18 +62,20 @@ export default {
       console.log(key, keyPath);
     },
   },
-  components:{
-    
-  }
-
+  components: {},
 };
 </script>
 
 <style lang="scss">
 #siderbar {
+  width: 150px;
+  height: 100%;
+  .el-menu {
+    width: 100%;
     height: 100%;
-    .el-menu{
-           height: 100%; 
+    .el-menu-item{
+        width: 100%;
     }
+  }
 }
 </style>

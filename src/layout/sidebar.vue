@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar-wrapper">
     <div class="sidebar-logo">
-        <el-image v-if="logo" style="width: 70px;height: 70px;" :src='logo'></el-image>
+      <el-image
+        v-if="logo"
+        style="width: 70px; height: 70px"
+        :src="logo"
+      ></el-image>
     </div>
     <div class="sidebar-menu"><Menu :active="active"></Menu></div>
     <!-- <el-dropdown
@@ -23,7 +27,7 @@
 <script>
 // import { mapGetters } from "vuex";
 import Menu from "./routerMenu.vue";
- 
+
 export default {
   name: "HomeView",
   components: {
@@ -35,11 +39,10 @@ export default {
   data() {
     return {
       active: this.$route.name,
-      logo:''
+      logo: "",
     };
   },
   created() {
-   
     // console.log(this.$route);
   },
   methods: {
@@ -71,7 +74,6 @@ export default {
 .sidebar-wrapper {
   width: 100%;
   height: 100%;
- 
 
   background-repeat: no-repeat, no-repeat;
 
@@ -93,60 +95,83 @@ export default {
     }
   }
   .sidebar-menu {
-    height: calc(100% - 70px);
-    overflow: auto;
+    width: 150px;
+    height: calc(100% - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      /* -webkit-box-shadow: inset 0 0 5px rgba(186, 187, 255, 0.2); */
+      /* background: transparent; */
+      background: #a9a9a9;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #a9a9a9;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none;
+      /* -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1); */
+    }
   }
-  
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #fff;
-      vertical-align: text-bottom;
 
-      &.hover-effect {
-        cursor: pointer;
-   
+  .right-menu-item {
+    display: inline-block;
+    padding: 0 8px;
+    height: 100%;
+    font-size: 18px;
+    color: #fff;
+    vertical-align: text-bottom;
 
-        &:hover {
-          background: rgba(0, 0, 0, 0.025);
-        }
+    &.hover-effect {
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.025);
       }
     }
-    .avatar-container {
-        width: 100%;
-        height: 70px;
+  }
+  .avatar-container {
+    width: 100%;
+    height: 70px;
 
-      .avatar-wrapper {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items:center;
-       
-        position: relative;
-        color: #333;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          margin: 0 0 0 5px;
-          font-size: 12px;
-        }
-      }
-    }
-    .breadcrumb-wrapper {
+    .avatar-wrapper {
       width: 100%;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.5);
-      box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.04);
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+      color: #333;
+
+      .user-avatar {
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+
+      .el-icon-caret-bottom {
+        cursor: pointer;
+        margin: 0 0 0 5px;
+        font-size: 12px;
+      }
     }
+  }
+  .breadcrumb-wrapper {
+    width: 100%;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.04);
+  }
 }
 </style>
