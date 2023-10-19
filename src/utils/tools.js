@@ -59,48 +59,48 @@ function getDate(ms) {
     }
 }
 
-var newDate = getDate(new Date().getTime() - new Date("2024-01-01").getTime());
-console.log(newDate);
+// var newDate = getDate(new Date().getTime() - new Date("2024-01-01").getTime());
+// console.log(newDate);
 
-//判断是否IE<11浏览器
+// //判断是否IE<11浏览器
 
-function isIE() {
-    return navigator.userAgent.indexOf('compatible') > -1 && navigator.userAgent.indexOf('MSIE') > -1
+// function isIE() {
+//     return navigator.userAgent.indexOf('compatible') > -1 && navigator.userAgent.indexOf('MSIE') > -1
 
-}
-console.log(isIE());
-//判断是否IE11浏览器
-function isIE11() {
-    return navigator.userAgent.indexOf('Trident') > -1 && navigator.userAgent.indexOf('rv:11.0') > -1
-}
-console.log(isIE11(), 'isIE11');
+// }
+// console.log(isIE());
+// //判断是否IE11浏览器
+// function isIE11() {
+//     return navigator.userAgent.indexOf('Trident') > -1 && navigator.userAgent.indexOf('rv:11.0') > -1
+// }
+// console.log(isIE11(), 'isIE11');
 
-//判断是否IE的Edge浏览器
-function isEdge() {
-    return navigator.userAgent.indexOf('Edge') > -1 && !isIE()
-}
-console.log(isEdge(), 'isEdge');
-function getIEVersion() {
-    let userAgent = navigator.userAgent //取得浏览器的userAgent字符串
-    let _isIE = isIE()
-    let _isIE11 = isIE11()
-    let _isEdge = isEdge()
+// //判断是否IE的Edge浏览器
+// function isEdge() {
+//     return navigator.userAgent.indexOf('Edge') > -1 && !isIE()
+// }
+// console.log(isEdge(), 'isEdge');
+// function getIEVersion() {
+//     let userAgent = navigator.userAgent //取得浏览器的userAgent字符串
+//     let _isIE = isIE()
+//     let _isIE11 = isIE11()
+//     let _isEdge = isEdge()
 
-    if (_isIE) {
-        let reIE = new RegExp('MSIE (\\d+\\.\\d+);')
-        reIE.test(userAgent)
-        let fIEVersion = parseFloat(RegExp['$1'])
-        if (fIEVersion === 7 || fIEVersion === 8 || fIEVersion === 9 || fIEVersion === 10) {
-            return fIEVersion
-        } else {
-            return 6//IE版本<7
-        }
-    } else if (_isEdge) {
-        return 'edge'
-    } else if (_isIE11) {
-        return 11
-    } else {
-        return -1
-    }
-}
-console.log(getIEVersion());
+//     if (_isIE) {
+//         let reIE = new RegExp('MSIE (\\d+\\.\\d+);')
+//         reIE.test(userAgent)
+//         let fIEVersion = parseFloat(RegExp['$1'])
+//         if (fIEVersion === 7 || fIEVersion === 8 || fIEVersion === 9 || fIEVersion === 10) {
+//             return fIEVersion
+//         } else {
+//             return 6//IE版本<7
+//         }
+//     } else if (_isEdge) {
+//         return 'edge'
+//     } else if (_isIE11) {
+//         return 11
+//     } else {
+//         return -1
+//     }
+// }
+// console.log(getIEVersion());

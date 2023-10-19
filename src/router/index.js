@@ -44,7 +44,7 @@ const routes = [
                     ...js
                 ]
             },
-            //js
+            //vue
             {
                 path: 'vueDepot',
                 name: 'vueDepot',

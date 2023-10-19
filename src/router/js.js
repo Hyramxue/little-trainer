@@ -121,6 +121,17 @@ const js = [
         },
 
     },
+    //天地图
+    {
+        path: 'tianditu',
+        name: 'tianditu',
+
+        component: () => import('@/views/js/tianditu/index'),
+        meta: {
+            title: '天地图'
+        },
+
+    },
 
 
 

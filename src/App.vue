@@ -16,7 +16,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$route);
+  
   },
   watch: {
     $route(to, from) {
