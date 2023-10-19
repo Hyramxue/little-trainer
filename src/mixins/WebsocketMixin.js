@@ -25,7 +25,7 @@ export const WebsocketMixin = {
             if (!startsWith(this.socketUrl, '/')) {
                 this.socketUrl = '/' + this.socketUrl
             }
-            if (!this.socketUrl.endsWith('/')) {
+            if (!endsWith(this.socketUrl, '/')) {
                 this.socketUrl = this.socketUrl + '/'
             }
             var url = ''
