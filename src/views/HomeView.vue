@@ -7,10 +7,10 @@
 
 <script>
 // @ is an alias to /src
-import { WebsocketMixin } from "@/mixins/WebsocketMixin";
+// import { WebsocketMixin } from "@/mixins/WebsocketMixin";
 export default {
   name: "HomeView",
-  mixins: [WebsocketMixin],
+//   mixins: [WebsocketMixin],
   data() {
     return {};
   },

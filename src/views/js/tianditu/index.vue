@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { isMobile } from "@/utils";
+ 
 export default {
   data() {
     return {
@@ -40,9 +40,9 @@ export default {
     };
   },
   mounted() {
-    // this.$nextTick(() => {
-    //   this.initMap();
-    // });
+    this.$nextTick(() => {
+      this.initMap();
+    });
   },
   methods: {
     /**
