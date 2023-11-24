@@ -10,7 +10,9 @@ import store from "./store";
 import "@/assets/scss/defualt.scss"; //自己样式
 import "@/assets/scss/mystyle.scss"; //自己样式
 import plugins from "./plugins"; // plugins
- 
+
+// 引入bus
+import vueBus from "@/utils/vueBus";
 
 import "@/login"; // permission control
 /**
@@ -41,7 +43,7 @@ Vue.component("statistic", statistic);
 
 Vue.use(plugins);
 Vue.use(ElementUI);
- 
+Vue.use(vueBus);
 Vue.config.productionTip = false;
 
 new Vue({

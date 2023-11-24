@@ -4,24 +4,10 @@
     <div class="sidebar-menu">
       <Menu :active="active" :routersArr="routersArr"></Menu>
     </div>
-    <!-- <el-dropdown
-      class="avatar-container right-menu-item hover-effect"
-      trigger="click"
-    >
-      <div class="avatar-wrapper">
-        <img :src="avatar" class="user-avatar" />
-      </div>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item  @click.native="logout">
-          <span>退出登录</span>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>-->
   </div>
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 import Menu from "./routerMenu.vue";
 
 export default {
@@ -44,29 +30,11 @@ export default {
       logo: "",
     };
   },
-  created() {
-    // console.log(this.$route);
-  },
-  methods: {
-    async logout() {
-      this.$confirm("确定注销并退出系统吗？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.$store.dispatch("LogOut").then(() => {
-            this.$router.push("/login");
-          });
-        })
-        .catch(() => {});
-    },
-  },
+  created() {},
+  methods: {},
   watch: {
     $route(to, from) {
       this.active = to.name;
-
-      //   console.log(to );
     },
     deep: true,
   },

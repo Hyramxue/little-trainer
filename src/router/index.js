@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Layout from "../layout";
+import Layout from "../layoutTwo";
 import js from "./js";
 import vueDepot from "./vueDepot";
 import css from "./css";

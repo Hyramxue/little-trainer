@@ -1,7 +1,7 @@
 <template>
   <div class="home-wrapper">
     <div class="left-wrapper">
-      <sidebar></sidebar>
+      <sidebar :routersArr="$router.options.routes[1].children"></sidebar>
     </div>
     <div class="right-wrapper">
       <navbar></navbar>
@@ -15,11 +15,15 @@
 <script>
 import Sidebar from "./sidebar";
 import Navbar from "./navbar";
+
 export default {
   name: "HomeView",
   components: {
     Sidebar,
     Navbar,
+  },
+  data() {
+    return {};
   },
 };
 </script>

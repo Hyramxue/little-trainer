@@ -39,27 +39,17 @@
 <script>
 export default {
   name: "siderbar",
-  props: {
-    active: {
-      type: String,
-      default: () => {
-        return "";
-      },
-    },
-    routersArr: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-  },
+  props: {},
   data() {
-    return {};
+    return {
+      routersArr: [],
+      firstPath: "",
+    };
   },
-  created() {
-    //   console.log(1,this.$router.options );
+  created() {},
+  mounted() {
+
   },
-  mounted() {},
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -68,8 +58,9 @@ export default {
       console.log(key, keyPath);
     },
     goRouter(router) {
-      router = "/" + router;
-      this.$router.push(router);
+      let path = this.firstPath + "/" + router;
+      console.log(path);
+      this.$router.push(path);
     },
   },
   computed: {

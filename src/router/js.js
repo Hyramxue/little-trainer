@@ -56,8 +56,8 @@ const js = {
     },
     //food
     {
-      path: "charging",
-      name: "charging",
+      path: "charging1",
+      name: "charging1",
 
       component: () => import("@/views/js/charging/index"),
       meta: {
