@@ -1,7 +1,7 @@
 <template>
   <div class="top-menuNav-wrapper">
     <div class="menuNav-bar-flex">
-      <el-menu :default-active="active" mode="horizontal">
+      <el-menu :default-active="active" mode="horizontal" class="top-menu-box">
         <template
           v-for="router in routers.filter((ele) => {
           return ele.meta && ele.meta.title;
@@ -29,12 +29,6 @@
 import { mapGetters } from "vuex";
 export default {
   props: {
-    active: {
-      type: String,
-      default: () => {
-        return "";
-      },
-    },
     routersArr: {
       type: Array,
       default: () => {
@@ -46,11 +40,11 @@ export default {
     return {
       nowTime: "",
       day: "",
+      active: "",
     };
   },
   computed: {
     routers() {
-      console.log(this.routersArr);
       return this.routersArr;
     },
   },
@@ -94,21 +88,41 @@ export default {
       this.nowTimes = null;
     },
     menuClick(router) {
-      console.log(router);
+      //   console.log(router);
       const childrenArr = router.children || [];
       if (!childrenArr.length) {
         this.$router.push(router);
       }
-      this.$bus.$emit("getTwoRouter", { firstPath: "/" + router.path, childrenArr });
+      //   this.$bus.$emit("getTwoRouter", {
+      //     firstPath: "/" + router.path,
+      //     childrenArr,
+      //   });
+      this.$store.commit("menu/SET_FIRSTPATH", "/" + router.path);
+      this.$store.commit("menu/SET_CHILDRENARR", childrenArr);
     },
   },
   watch: {
     $route: {
       handler: function (to, from) {
-        //   this.nowTimes();
+        let active = to.path.split("/")[1];
+
+        let activeIndex = this.routers.findIndex(
+          (item) => item.name === active
+        );
+        const childrenArr = this.routers[activeIndex].children || [];
+
+        if (!childrenArr.length) {
+          this.$store.commit("menu/SET_FIRSTPATH", null);
+        } else {
+          this.$store.commit("menu/SET_FIRSTPATH", "/" + active);
+        }
+
+        this.$store.commit("menu/SET_CHILDRENARR", childrenArr);
+        this.active = active;
       },
       // 深度观察监听
       deep: true,
+      immediate: true,
     },
     beforeDestroy() {
       if (this.nowTimes) {
@@ -129,7 +143,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 15px 30px;
+    padding: 0 30px;
     background: #fff;
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.04);
 
@@ -150,6 +164,14 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+
+::v-deep .menuNav-bar-flex {
+  .el-menu--horizontal > .el-menu-item {
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
   }
 }
 </style>

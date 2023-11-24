@@ -37,19 +37,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "siderbar",
   props: {},
   data() {
     return {
       routersArr: [],
-      firstPath: "",
     };
   },
   created() {},
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -59,14 +57,22 @@ export default {
     },
     goRouter(router) {
       let path = this.firstPath + "/" + router;
-      console.log(path);
       this.$router.push(path);
     },
   },
   computed: {
     routers() {
-      return this.routersArr;
+      return this.childrenArr;
     },
+    active() {
+      let active = "";
+      if (this.$route.path.split("/").length >= 3) {
+        active = this.$route.path.split("/")[2];
+      }
+
+      return active;
+    },
+    ...mapGetters(["childrenArr", "firstPath"]),
   },
 };
 </script>

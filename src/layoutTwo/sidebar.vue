@@ -2,7 +2,7 @@
   <div class="sidebar-wrapper">
     <!-- <div class="sidebar-logo">XHW</div> -->
     <div class="sidebar-menu">
-      <Menu :active="active" :routersArr="routersArr"></Menu>
+      <Menu  ></Menu>
     </div>
   </div>
 </template>

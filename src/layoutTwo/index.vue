@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapGetters  } from "vuex";
 import Sidebar from "./sidebar";
 import navbarMenu from "./navbarMenu";
 export default {
@@ -26,23 +27,11 @@ export default {
     navbarMenu,
   },
   data() {
-    return {
-      routersArr: [],
-      firstPath: "",
-    };
+    return {};
   },
-  mounted() {
-    this.$bus.$on("getTwoRouter", (form) => {
-      //上传图片
-      console.log("bus", form);
-      this.routersArr = form.childrenArr;
-      this.firstPath = form.firstPath;
-    });
-  },
+  mounted() {},
   computed: {
-    leftShow() {
-      return this.routersArr.length;
-    },
+    ...mapGetters(["childrenArr", "firstPath", "leftShow"]),
   },
 };
 </script>
@@ -59,7 +48,6 @@ export default {
     width: 100%;
     height: calc(100% - 50px);
     display: flex;
- 
   }
   .left-wrapper {
     width: 150px;
