@@ -9,11 +9,11 @@ const menu = {
   mutations: {
     SET_FIRSTPATH: (state, firstPath) => {
       state.firstPath = firstPath;
-      state.leftShow = firstPath ? true : false;
-      console.log( state.leftShow);
     },
     SET_CHILDRENARR: (state, childrenArr) => {
       state.childrenArr = childrenArr;
+      state.leftShow = childrenArr.length ? true : false;
+      console.log(state.leftShow);
     },
   },
 

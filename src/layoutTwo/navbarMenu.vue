@@ -97,6 +97,7 @@ export default {
       //     firstPath: "/" + router.path,
       //     childrenArr,
       //   });
+
       this.$store.commit("menu/SET_FIRSTPATH", "/" + router.path);
       this.$store.commit("menu/SET_CHILDRENARR", childrenArr);
     },
@@ -111,12 +112,7 @@ export default {
         );
         const childrenArr = this.routers[activeIndex].children || [];
 
-        if (!childrenArr.length) {
-          this.$store.commit("menu/SET_FIRSTPATH", null);
-        } else {
-          this.$store.commit("menu/SET_FIRSTPATH", "/" + active);
-        }
-
+        this.$store.commit("menu/SET_FIRSTPATH", "/" + active);
         this.$store.commit("menu/SET_CHILDRENARR", childrenArr);
         this.active = active;
       },
