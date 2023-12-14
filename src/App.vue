@@ -13,7 +13,7 @@ export default {
   watch: {
     $route(to, from) {
       this.active = to.name;
-      //v2测试合并
+      //mna测试合并
       //   console.log(to );
     },
     deep: true,
