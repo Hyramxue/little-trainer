@@ -8,6 +8,12 @@ const css = {
   },
   children: [
     {
+      path: "Loaders",
+      name: "Loaders",
+      component: () => import("@/views/css/Loaders/Loaders"),
+      meta: { title: "加载动效", icon: "" },
+    },
+    {
       path: "spring",
       name: "spring",
       component: () => import("@/views/css/spring/spring"),

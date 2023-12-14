@@ -44,6 +44,10 @@ Vue.component("statistic", statistic);
 Vue.use(plugins);
 Vue.use(ElementUI);
 Vue.use(vueBus);
+
+import Loading from "@/views/css/Loaders/element/index.js";
+Vue.use(Loading.directive);
+Vue.prototype.$xhwLoading = Loading.service;
 Vue.config.productionTip = false;
 
 new Vue({

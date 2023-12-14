@@ -4,9 +4,8 @@
     <el-divider></el-divider>
     <img :src="imgSrc" alt />
     <el-divider></el-divider>
- 
+
     <el-divider></el-divider>
- 
   </div>
 </template>
 
@@ -24,7 +23,7 @@ export default {
       const inputEl = e.target;
       if (!inputEl) return;
       const file = inputEl.files[0]; //获取文件的信息
-      //   console.log("inputEl.files", file);
+      console.log("inputEl.files", file);
 
       //   const url = URL.createObjectURL(file); //获取本地文件地址Blob对象
 

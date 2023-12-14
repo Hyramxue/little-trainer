@@ -8,6 +8,15 @@ const js = {
   },
   children: [
     {
+      path: "barcodeDetector",
+      name: "barcodeDetector",
+
+      component: () => import("@/views/js/barcodeDetector/index"),
+      meta: {
+        title: "条码检测API",
+      },
+    },
+    {
       path: "echarts",
       name: "echarts",
 

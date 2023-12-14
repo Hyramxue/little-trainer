@@ -1,22 +1,15 @@
 <template>
   <div id="app">
-    <router-view  />
+    <router-view />
   </div>
 </template>
 <script>
- 
 export default {
-  components: {
- 
-  },
+  components: {},
   data() {
-    return {
- 
-    };
+    return {};
   },
-  created() {
-  
-  },
+  created() {},
   watch: {
     $route(to, from) {
       this.active = to.name;
@@ -32,7 +25,7 @@ export default {
   height: 100vh;
   width: 100vw;
   min-width: 1400px;
-  //   overflow: hidden;
+//   overflow: auto;
   .el-aside {
     height: 100vh;
   }

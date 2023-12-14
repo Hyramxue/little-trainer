@@ -1,22 +1,30 @@
 <template>
-  <div>
-    <button @click="openWebcam">打开摄像头</button>
+  <div class="flex">
+    <div>
+      <button @click="openWebcam">打开摄像头</button>
+      <button @click="shoot">拍摄</button>
+      <input @change="getImageFromLocal" type="file" ref="fileInput" accept="image/*" />
+    </div>
+    <img :src="image" alt />
     <video id="video" autoplay ref="videoWebcam"></video>
   </div>
 </template>
 
 <script>
+import { uploadImg } from "@/api/upload";
 export default {
   name: "mediaDevices",
   data() {
     return {
       mediaDevices: null,
+      image: null,
+      uploader: "",
     };
   },
   created() {
-    // this.$nextTick(() => {
-    this.checkCamera();
-    // });
+    this.$nextTick(() => {
+      this.checkCamera();
+    });
   },
   mounted() {},
   methods: {
@@ -60,6 +68,7 @@ export default {
         // 使用摄像头
       }
     },
+    //打开摄像头
     openWebcam() {
       const mediaDevices = this.mediaDevices;
       let mediaObj = {
@@ -76,6 +85,7 @@ export default {
         .then((ele) => {
           console.log(ele);
           let videoWebcam = this.$refs.videoWebcam;
+          if (!videoWebcam) return;
           videoWebcam.srcObject = ele;
           videoWebcam.play();
         })
@@ -84,6 +94,7 @@ export default {
           this.getError(err);
         });
     },
+    //错误处理
     getError(err) {
       const strErr = err.toString();
       switch (strErr) {
@@ -123,6 +134,81 @@ export default {
           console.log("其他未知错误");
           break;
       }
+    },
+    //拍摄
+    async shoot() {
+      let videoRefs = this.$refs.videoWebcam;
+      if (!videoRefs) return;
+      const canvas = document.createElement("canvas");
+      canvas.width = videoRefs.videoWidth;
+      canvas.height = videoRefs.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(videoRefs, 0, 0);
+      const data = canvas.toDataURL("image/png");
+
+      this.image = data;
+
+      //base格式转为文件格式
+      let file = await this.base64ToFile(data, "test");
+      console.log(file);
+      let formData = new FormData();
+      await formData.append("file", file);
+      console.log(formData);
+      uploadImg(formData).then((ele) => {
+        console.log(ele);
+      });
+    },
+    async getImageFromLocal(e) {
+      const inputEl = e.target;
+      if (!inputEl) return;
+      const file = inputEl.files[0]; //获取文件的信息
+      console.log("inputEl.files", file);
+      console.log(file);
+      //   const url = URL.createObjectURL(file); //获取本地文件地址Blob对象
+
+      let formData = new FormData();
+      await formData.append("file", file);
+
+      uploadImg(formData).then((ele) => {
+        console.log(ele);
+      });
+    },
+
+    base64ToFile(base64, fileName) {
+      // 将base64按照 , 进行分割 将前缀  与后续内容分隔开
+      let data = base64.split(",");
+      // 利用正则表达式 从前缀中获取图片的类型信息（image/png、image/jpeg、image/webp等）
+      let type = data[0].match(/:(.*?);/)[1];
+      // 从图片的类型信息中 获取具体的文件格式后缀（png、jpeg、webp）
+      let suffix = type.split("/")[1];
+      // 使用atob()对base64数据进行解码  结果是一个文件数据流 以字符串的格式输出
+      const bstr = window.atob(data[1]);
+      // 获取解码结果字符串的长度
+      let n = bstr.length;
+      // 根据解码结果字符串的长度创建一个等长的整形数字数组
+      // 但在创建时 所有元素初始值都为 0
+      const u8arr = new Uint8Array(n);
+      // 将整形数组的每个元素填充为解码结果字符串对应位置字符的UTF-16 编码单元
+      while (n--) {
+        // charCodeAt()：获取给定索引处字符对应的 UTF-16 代码单元
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      // 利用构造函数创建File文件对象
+      // new File(bits, name, options)
+      const file = new File([u8arr], `${fileName}.${suffix}`, {
+        type: type,
+      });
+      // 将File文件对象返回给方法的调用者
+      return file;
+    },
+    afterRead(file) {
+      file.status = "uploading";
+      file.message = "上传中...";
+      let formData = new FormData();
+      formData.append("avatarfile", file.file);
+      uploadImg(formData).then((ele) => {
+        console.log(ele);
+      });
     },
   },
 };
